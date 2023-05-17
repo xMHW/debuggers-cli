@@ -3,7 +3,7 @@ Instructions
 2. Use CLI to get suggested test definition yaml format.
 
 Command
-- python yaml_gen.py -r {REPO_URL}
+- OPENAI_API_KEY={openai_api_key} python yaml_gen.py -r {REPO_URL}
 
 Result
 - resulting yaml file will be saved to ./yaml folder

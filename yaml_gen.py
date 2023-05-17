@@ -1,7 +1,5 @@
 import os, argparse, random
 
-os.environ["OPENAI_API_KEY"] = os.environ.get("MS_OPENAI_KEY")
-
 from langchain.document_loaders import GitLoader
 from langchain.indexes import VectorstoreIndexCreator
 from langchain.chains import RetrievalQA
