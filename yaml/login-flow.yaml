@@ -1,0 +1,13 @@
+
+    Create test cases based on the given context, and recommend tools for running the tests. 
+    Action: 
+    Create test cases that will test the following scenarios: 
+    1. Verify that the files.forEach(this.addDependency) function adds the correct dependencies from the main.css file to the other css files. 
+    2. Verify that the variables are replaced correctly with postcss-simple-vars. 
+    3. Verify that the :focus selector is added to every :hover selector with postcss-focus. 
+    4. Verify that the vendor prefixes are added correctly with autoprefixer, supporting the last 2 major browser versions and IE 8 and up. 
+    5. Verify that the warnings are shown correctly in the console with postcss-reporter. 
+    6. Verify that the web variables are accessible to webpack. 
+    7. Verify that the Link to "/dashboard" is rendered when user is logged in. 
+    8. Verify that the Link to "/login" and "/register" are rendered when user is not logged in. 
+    9. Verify that the features listed in the text section are correctly implemented

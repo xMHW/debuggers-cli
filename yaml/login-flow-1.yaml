@@ -1,0 +1,11 @@
+    - it:
+        name: it-logout
+        actions:
+          - navigate:
+              path: /logout
+              file-path: src/pages/logout.html
+          - sleep: 5s
+          - clickButton:
+              selector: "body > div > div > .button"
+        expected:
+          - redirected-page: /login
