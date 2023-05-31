@@ -1,0 +1,80 @@
+- file: js/actions/AppActions.js
+  description: >
+    This file contains actions for changing the application state with Redux.
+    It includes functions for logging in, logging out, and registering a user, as well
+    as setting authentication state, form state, sending request state, and error message state.
+  imports:
+    - bcrypt from 'bcryptjs'
+    - SET_AUTH, CHANGE_FORM, SENDING_REQUEST, SET_ERROR_MESSAGE from '../constants/AppConstants'
+    - * as errorMessages from '../constants/MessageConstants'
+    - auth from '../utils/auth'
+    - genSalt from '../utils/salt'
+    - browserHistory from 'react-router'
+  functions:
+    - login(username, password):
+        description: > 
+          Logs an user in by verifying credentials and authenticating the user. 
+          If successful, updates the state and redirects to the dashboard. 
+          If unsuccessful, displays an error message. 
+        parameters: 
+          - username: string
+            description: The username to log in with
+          - password: string
+            description: The password to log in with
+    - logout():
+        description: >
+          Logs out the user by updating the state and redirecting to the home page.
+        parameters: null
+    - register(username, password):
+        description: >
+          Registers a new user by creating a new account with encrypted credentials. 
+          If successful, updates the state and redirects to the dashboard. 
+          If unsuccessful, displays an error message. 
+        parameters: 
+          - username: string
+            description: The username to register with
+          - password: string
+            description: The password to register with
+    - setAuthState(newState):
+        description: >
+          Sets the authentication state of the application.
+        parameters: 
+          - newState: boolean
+            description: The new authentication state to set
+    - changeForm(newState): 
+        description: >
+          Sets the new state of the form upon input changes.
+        parameters: 
+          - newState: object
+            description: The new state of the form to set
+          - newState.username: string
+            description: The new text of the username input field of the form
+          - newState.password: string
+            description: The new text of the password input field of the form
+    - sendingRequest(sending):
+        description: >
+          Sets the sendingRequest state, which displays a loading indicator during requests.
+        parameters: 
+          - sending: boolean
+            description: The new state the app should have
+    - setErrorMessage(message):
+        description: >
+          Sets the errorMessage state, which displays the ErrorMessage component when it is not empty.
+        parameters: 
+          - message: string
+            description: The error message to set.
+    - forwardTo(location): 
+        description: >
+          Forwards the user to the specified location.
+        parameters: 
+          - location: string
+            description: The route the user should be forwarded to
+    - anyElementsEmpty(elements): 
+        description: >
+          Checks if any elements of a JSON object are empty.
+        parameters: 
+          - elements: object
+            description: The object that should be checked
+        returns: 
+          - boolean
+            description: True if there are empty elements, false if there aren't

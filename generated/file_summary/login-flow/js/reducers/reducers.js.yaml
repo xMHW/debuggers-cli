@@ -1,0 +1,10 @@
+- File: js/reducers/reducers.js
+  Description: This file contains a reducer function that manages the application state using actions.
+  Important Information:
+    - Imports constants from '../constants/AppConstants'
+    - Imports the 'assign' method from 'object.assign' or a polyfill
+    - Defines the initial state of the application
+    - Defines a 'homeReducer' function that takes care of changing the application state
+    - The 'homeReducer' function contains a switch statement with cases for different actions
+    - Each case returns a new state object using the 'assign' method and the updated values from the action
+    - The default case returns the current state without any changes.

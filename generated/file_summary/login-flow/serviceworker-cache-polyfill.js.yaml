@@ -1,0 +1,14 @@
+file_name: serviceworker-cache-polyfill.js
+author: Google Inc.
+year_created: 2015
+license: Apache License, Version 2.0
+contains: 
+  - Cache.addAll() function polyfill
+  - NetworkError class for handling errors related to network requests
+  - Promise usage for handling asynchronous operations
+  - Fetch API usage for making network requests
+notes: 
+  - This file provides a polyfill for the Cache.addAll() function, which is not supported by all browsers.
+  - The NetworkError class is used within the polyfill to handle errors related to network requests.
+  - The file makes use of the Promise API to handle asynchronous operations.
+  - The Fetch API is used to make network requests within the polyfill.

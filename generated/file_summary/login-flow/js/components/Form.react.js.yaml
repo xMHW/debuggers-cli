@@ -1,0 +1,24 @@
+file_name: Form.react.js
+file_type: JavaScript React Component
+description: A form with a username and password input field that are controlled through the application state using React.
+imported_libraries:
+  - React
+  - object.assign
+  - ../actions/AppActions
+components:
+  - LoadingButton
+  - ErrorMessage
+methods:
+  - _changeUsername
+  - _changePassword
+  - _mergeWithCurrentState
+  - _emitChange
+  - _onSubmit
+props:
+  - onSubmit
+  - btnText
+  - data
+propTypes:
+  - onSubmit
+  - btnText
+  - data

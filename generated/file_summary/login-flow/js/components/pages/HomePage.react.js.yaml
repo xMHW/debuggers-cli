@@ -1,0 +1,22 @@
+File:
+  Name: js/components/pages/HomePage.react.js
+  Description: This file contains the code for the HomePage component, which is the first page users see when opening the app.
+  Route: /
+  Dependencies:
+    - 'react'
+    - 'react-router'
+    - '../Nav.react'
+    - 'react-redux'
+  Features:
+    - Uses React.js for the frontend
+    - Implements a register/login workflow
+    - Uses Redux for state management
+    - Uses PostCSS for styling
+    - Uses react-router for routing
+    - Implements offline capabilities with ServiceWorker and AppCache
+    - Uses bcrypt for password encryption
+  Authentication:
+    - Authentication logic is contained in js/utils/auth.js
+    - Uses fakeRequest.js and fakeServer.js for fake authentication
+    - Passwords are encrypted using bcrypt
+    - Can be changed to use real authentication by importing request.js and connecting to a real server

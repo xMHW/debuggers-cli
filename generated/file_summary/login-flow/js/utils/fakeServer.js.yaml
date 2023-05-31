@@ -1,0 +1,22 @@
+- File Name: fakeServer.js
+- Location: js/utils/fakeServer.js
+- File Contents:
+  1. Imports:
+    - bcrypt from 'bcryptjs'
+    - genSalt from './salt'
+  2. Variables:
+    - salt: bcrypt generated salt with a factor of 10
+    - users: variable to hold user data
+    - localStorage: global.window.localStorage to hold data across page reloads
+  3. Object server:
+    - Methods:
+      - init(): populates the users variable, similar to seeding a database
+      - login(): pretends to log a user in
+      - register(): pretends to register a user
+      - logout(): pretends to log a user out
+      - doesUserExist(): checks if a username exists in the db
+    - Properties:
+      - authenticated: if a user is authenticated or not
+      - token: Math.random().toString(36).substring(7)
+      - error: object with error type if any error occurs during login or registration
+  4. module.exports: exports the server object.

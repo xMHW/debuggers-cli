@@ -1,0 +1,15 @@
+name: App.react.js
+path: js/components/
+description: 
+  - This file is a React component that serves as the skeleton for all pages.
+  - It imports the Nav component and uses it to display a navigation bar.
+  - It also connects to Redux to inject state and dispatch into the component.
+  - It checks whether the user is logged in and passes this information as props.
+functions:
+  - render(): Renders the component, displaying the Nav and any children components.
+  - select(state): Redux function that selects which parts of the global state to inject as props.
+dependencies: 
+  - React
+  - Nav.react.js
+  - react-redux
+  - auth.js
