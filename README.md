@@ -5,11 +5,15 @@ Instructions
 
 Command
 
-[yaml-gen - generated/file_summary/*.yaml generate]
+[summary-gen - generated/{repo_name}/file_summary/*.yaml generate]
 
-- OPENAI_API_KEY={openai_api_key} python yaml_gen.py -r {REPO_URL} -m yaml-gen
+- OPENAI_API_KEY={openai_api_key} python yaml_gen.py -r {REPO_URL} -m summary-gen
 
-[test-gen - generated/test_code/*.js generate]
+[test-scenario-gen - generated/{repo_name}/test-scenario.txt generate]
+
+- OPENAI_API_KEY={openai_api_key} python yaml_gen.py -r {REPO_URL} -m test-scenario-gen
+
+[test-gen - generated/{repo_name}/test_code/*.js generate]
 
 - OPENAI_API_KEY={openai_api_key} python yaml_gen.py -r {REPO_URL} -m test-gen
 
