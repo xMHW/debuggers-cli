@@ -1,14 +1,15 @@
-- Filename: server.js
-- Purpose: This file is used to start a development server when running `npm start`.
-- Dependencies:
-  - webpack: a module bundler for Javascript applications
-  - webpack-dev-server: a development server that provides live reloading capabilities
-- Configuration:
-  - `config`: contains the configuration for webpack, including the entry point and output path for the bundled file
-  - `publicPath`: the path to the served assets
-  - `hot`: enables Hot Module Replacement (HMR), which allows the server to update modules without a full page refresh
-  - `inline`: specifies if webpack should add the script necessary for HMR into the bundle
-  - `historyApiFallback`: enables serving index.html in place of 404 responses, useful for Single-Page Applications (SPAs)
-  - `quiet`: disables logging from the server
-- Port: 3000
-- Host: localhost
+file_name: server.js
+file_type: JavaScript
+functionality: Starts a server with hot reloading and history API fallback
+dependencies:
+  - webpack
+  - webpack-dev-server
+  - webpack.dev.config
+output:
+  - publicPath: specifies the public URL of the output directory
+  - hot: enables hot reloading
+  - inline: controls how source maps are generated
+  - historyApiFallback: enables serving of index.html in place of 404 responses
+  - quiet: disables logging 
+port: 3000
+host: localhost

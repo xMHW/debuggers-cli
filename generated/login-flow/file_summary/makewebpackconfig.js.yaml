@@ -1,35 +1,18 @@
-- File Name: makewebpackconfig.js
-- Author: unknown
-- Dependencies: 
+name: makewebpackconfig.js
+description: This file exports a function that creates a webpack configuration object based on options passed to it. It includes settings for production and development modes, loaders for JavaScript and CSS files, and plugins for optimizing JavaScript and minifying HTML templates.
+dependencies:
   - path
   - webpack
   - html-webpack-plugin
   - appcache-webpack-plugin
-  - postcss-import
-  - postcss-simple-vars
-  - postcss-focus
-  - autoprefixer
-  - postcss-reporter
-- Description: This file exports a function that creates a configuration object for the webpack build process. It takes in an options object that specifies whether the build is for production or development. The configuration includes entry points, output information, module loaders, and various plugins that optimize and customize the build process.
-- Entry Points:
-  - If production mode, start with js/app.js
-  - If development mode, start with js/app.js and include webpack-dev-server and hot loading modules
-- Output: Compiles into js/build.js in the build folder
-- Loaders:
-  - babel loader for all .js files except those in node_modules folder
-  - PostCSS loader for all .css files
-  - url-loader for .png, .gif, and .jpeg files with a limit of 10000 bytes
-- Plugins:
-  - UglifyJsPlugin for javascript optimization in production mode
-  - HtmlWebpackPlugin to minify html and move index.html to the build folder
-  - AppCachePlugin to exclude .htaccess file
-  - HotModuleReplacementPlugin for hot module replacement in development mode
-- PostCSS:
-  - Imports and adds dependencies for all css files
-  - Replaces variables
-  - Adds :focus to :hover selectors
-  - Adds vendor prefixes to supported browsers
-  - Provides warnings in the console
-- Target: "web" to make web variables accessible to webpack
-- Stats: False to not show stats in the console
-- Progress: True to show progress in the console
+exports:
+  - function that returns a webpack configuration object
+properties:
+  - entry (Array): An array of files to use as entry points for webpack. If in production mode, it will only contain the path to the main app.js file. If in development mode, it will also include a webpack-dev-server file and hot-loading file.
+  - output (Object): An object containing settings for the output file that webpack will compile. It includes the path to output files and the filename for the compiled JavaScript bundle.
+  - module (Object): An object containing settings for webpack module loaders. It includes loaders for JavaScript, CSS, and image files.
+  - plugins (Array): An array of webpack plugins to use. In production mode, it includes plugins to optimize and minify JavaScript and HTML templates, as well as an appcache plugin. In development mode, it includes only a hot module replacement plugin and an appcache plugin.
+  - postcss (Function): A function that returns an array of postcss plugins to use. These plugins include importing CSS files, replacing variables, adding focus to hover elements, and adding vendor prefixes.
+  - target (String): The target environment to compile for. In this case, it is set to "web" to make web variables accessible to webpack.
+  - stats (Boolean): Whether or not to show stats in the console. It is set to false to avoid cluttering the console.
+  - progress (Boolean): Whether or not to show progress information in the console. It is set to true to show progress during compilation.
