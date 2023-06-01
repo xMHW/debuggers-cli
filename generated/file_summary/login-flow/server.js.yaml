@@ -1,0 +1,15 @@
+file_name: server.js
+file_type: JavaScript
+description: This file is used to start a server with hot reloading, using Webpack and WebpackDevServer.
+dependencies:
+  - webpack
+  - webpack-dev-server
+  - ./webpack.dev.config
+functionality: 
+  - Runs when npm start is called
+  - Starts a server with hot reloading
+  - Sets publicPath to config.output.publicPath
+  - Enables historyApiFallback
+  - Disables logging with the quiet option
+  - Listens for requests on localhost:3000
+author: Unknown

@@ -1,0 +1,18 @@
+filename: js/constants/MessageConstants.js
+description: This file contains variables with error messages for specific scenarios.
+constants:
+  - name: FIELD_MISSING
+    description: Text displayed when a required field is not filled out.
+    message: "Please fill out the entire form."
+  - name: WRONG_PASSWORD
+    description: Text displayed when an incorrect password is entered.
+    message: "Wrong password."
+  - name: USER_NOT_FOUND
+    description: Text displayed when a username does not exist.
+    message: "This username does not exist."
+  - name: USERNAME_TAKEN
+    description: Text displayed when a username is already in use.
+    message: "Sorry, but this username is already taken."
+  - name: GENERAL_ERROR
+    description: Text displayed for any generic error.
+    message: "Something went wrong, please try again."

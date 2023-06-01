@@ -1,0 +1,13 @@
+file_name: "AppConstants.js"
+file_type: "JavaScript"
+file_location: "js/constants/"
+file_purpose: "Declare constants used for actions in a Redux store"
+constants:
+  - name: "CHANGE_FORM"
+    description: "Indicates a request to change a form"
+  - name: "SET_AUTH"
+    description: "Indicates a user authentication status change"
+  - name: "SENDING_REQUEST"
+    description: "Indicates that an HTTP request is being sent"
+  - name: "SET_ERROR_MESSAGE"
+    description: "Indicates an error message has been set"

@@ -1,0 +1,12 @@
+- name: LoginPage.react.js
+  description: This file contains the code for the Login page of the web application.
+  route: /login
+  language: JavaScript
+  dependencies:
+    - React
+    - Redux
+  components:
+    - Form.react
+    - LoadingIndicator.react
+  functions:
+    - _login: Takes username and password as parameters and dispatches a login action.

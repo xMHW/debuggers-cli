@@ -1,0 +1,16 @@
+- Filename: serviceworker.js
+- Purpose: Service worker code for caching important files for faster loading
+- Import: serviceworker-cache-polyfill.js
+- Cache Name: react-boilerplate-cache-v1
+- URLs to Cache:
+  - /
+  - /css/main.css
+  - /js/bundle.js
+- Event Listeners:
+  - Install:
+    - Callback for cache opening and adding URLs to cache
+  - Fetch:
+    - Callback for handling requests and responses
+    - If request is in cache, return the cached response
+    - If not, clone the request and fetch it again
+    - If response is valid, clone it and cache it before returning the response to the browser
