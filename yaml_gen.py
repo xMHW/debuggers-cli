@@ -1,6 +1,7 @@
 import os
 import argparse
 import random
+from dotenv import load_dotenv
 
 from langchain import LLMChain
 from langchain.document_loaders import GitLoader, DirectoryLoader, TextLoader
@@ -13,6 +14,12 @@ from langchain.docstore.document import Document
 from langchain.text_splitter import CharacterTextSplitter
 from functools import reduce
 
+load_dotenv()
+
+
+TEST_SCENARIO_COUNT = os.getenv("TEST_SCENARIO_COUNT")
+GIT_REPOSITORY = os.getenv("GIT_REPOSITORY")
+
 OPENAI_MODELS = {
     "DAVINCI": "text-davinci-003",
     "GPT-3": "gpt-3.5-turbo",
@@ -20,8 +27,8 @@ OPENAI_MODELS = {
 }
 
 
-def generate_test_codes(repo_url):
-    repo_name = repo_url.split('/')[-1].split('.')[0]
+def generate_test_codes():
+    repo_name = GIT_REPOSITORY.split('/')[-1].split('.')[0]
     file_summary_path = f"./generated/{repo_name}/file_summary"
     test_scenario_file_path = f"./generated/{repo_name}/test-scenario.txt"
 
@@ -38,7 +45,7 @@ def generate_test_codes(repo_url):
     with open(test_scenario_file_path, "r") as f:
         test_scenarios = f.read()
 
-        for i in range(10):
+        for i in range(TEST_SCENARIO_COUNT):
             prompt_template = """You are a Software Engineer who writes test codes. 
             Your language/framework preference is Javascript(Node.js, Jest).
             Use the following pieces of context to do actions at the end.
@@ -78,8 +85,8 @@ def generate_test_codes(repo_url):
                         .replace("```javascript", "").replace("```", ""))
 
 
-def create_test_scenario(repo_url):
-    repo_name = repo_url.split('/')[-1].split('.')[0]
+def create_test_scenario():
+    repo_name = GIT_REPOSITORY.split('/')[-1].split('.')[0]
     file_summary_path = f"./generated/{repo_name}/file_summary"
 
     if os.path.exists(file_summary_path):
@@ -95,13 +102,13 @@ def create_test_scenario(repo_url):
     Action: {question}
     """
 
-    query = """
+    query = f"""
     Create 30 E2E business logic test scenarios based on document,
-    and choose only 10 important test scenarios related to users in Project Manager's perspective.
+    and choose only {TEST_SCENARIO_COUNT} important test scenarios related to users in Project Manager's perspective.
 
     Ignore configuration files such as webpack, package.json, etc. Embed business-logic-related files only.
     
-    10 E2E detail test cases(from 30 generated E2E tests) in BULLET POINTS:
+    {TEST_SCENARIO_COUNT} E2E detail test cases(from 30 generated E2E tests) in BULLET POINTS:
     """
 
     PROMPT = PromptTemplate(
@@ -122,8 +129,8 @@ def create_test_scenario(repo_url):
         f.write(qa.run(query))
 
 
-def generate_file_summary_yaml(repo_url):
-    repo_name = repo_url.split('/')[-1].split('.')[0]
+def generate_file_summary_yaml():
+    repo_name = GIT_REPOSITORY.split('/')[-1].split('.')[0]
     repo_path = f"./example_repo/{repo_name}"
     supported_extensions = (".js", ".ts", ".tsx")
 
@@ -131,7 +138,7 @@ def generate_file_summary_yaml(repo_url):
         loader = GitLoader(repo_path=repo_path, branch="master",
                            file_filter=lambda file_path: file_path.endswith(supported_extensions))
     else:
-        loader = GitLoader(clone_url=repo_url,
+        loader = GitLoader(clone_url=GIT_REPOSITORY,
                            repo_path=repo_path, branch="master",
                            file_filter=lambda file_path: file_path.endswith(supported_extensions))
 
@@ -169,18 +176,16 @@ def generate_file_summary_yaml(repo_url):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--repo_url", "-r", type=str,
-                        required=True, help="Github Public Repository URL")
     parser.add_argument("--generate_mode", "-m", type=str, required=True,
                         help="Generate mode - summary-gen, test-scenario-gen, test-gen")
 
     args = parser.parse_args()
 
     if args.generate_mode == "summary-gen":
-        generate_file_summary_yaml(args.repo_url)
+        generate_file_summary_yaml()
     elif args.generate_mode == "test-scenario-gen":
-        create_test_scenario(args.repo_url)
+        create_test_scenario()
     elif args.generate_mode == "test-gen":
-        generate_test_codes(args.repo_url)
+        generate_test_codes()
     else:
         print("generate_mode(-m) option should be one of summary-gen, test-scenario-gen, test-gen. Please try again.")
