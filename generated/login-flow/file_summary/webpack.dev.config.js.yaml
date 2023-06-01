@@ -1,0 +1,10 @@
+file_name: "webpack.dev.config.js"
+file_type: "JavaScript"
+file_purpose: "Webpack configuration for development environment"
+file_structure:
+  - "module.exports = require('./makewebpackconfig')({"
+  - "    prod: false"
+  - "});"
+additional_info:
+  - "Webpack is a module bundler that takes modules with dependencies and generates static assets representing those modules." 
+  - "Webpack allows developers to build complex applications out of smaller chunks of code, called modules."

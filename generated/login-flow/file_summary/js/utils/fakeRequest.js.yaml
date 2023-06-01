@@ -1,0 +1,17 @@
+file:
+    name: fakeRequest.js
+    path: js/utils/
+    description: "This file is a Fake XMLHttpRequest wrapper used for testing purposes."
+    language: JavaScript
+    dependencies:
+        - fakeServer.js
+    functions:
+        - name: post
+          description: "Simulates a post request to a remote server with fake network latency."
+          parameters:
+              - endpoint: string
+              - data: object (optional)
+              - callback: function (optional)
+          logic: "Delays the server response by 100ms to 2000ms, depending on a random value. Then, it sends the request to /login, /register or /logout, depending on the endpoint parameter."
+    author: Unknown
+    license: Unknown

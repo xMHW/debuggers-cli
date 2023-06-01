@@ -1,0 +1,14 @@
+file_name: MessageConstants.js
+ file_path: js/constants
+ variables:
+    - name: FIELD_MISSING
+      value: Please fill out the entire form.
+    - name: WRONG_PASSWORD
+      value: Wrong password.
+    - name: USER_NOT_FOUND
+      value: This username does not exist.
+    - name: USERNAME_TAKEN
+      value: Sorry, but this username is already taken.
+    - name: GENERAL_ERROR
+      value: Something went wrong, please try again.
+ description: This file contains variables that store the error messages to be displayed under certain circumstances. It follows a specific format where each variable is exported with a constant name and a message text.

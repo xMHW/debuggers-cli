@@ -1,0 +1,19 @@
+1. Test user registration: Verify that a new user can successfully register and receive a confirmation message upon completion.
+
+2. Test user login: Ensure that an existing user can log in with valid credentials and access the dashboard.
+
+3. Test password reset: Ensure that a user can reset their password by providing a valid email address, receiving a reset link, and updating their password.
+
+4. Test navigation: Verify that users can navigate between different sections of the application using the primary navigation menu.
+
+5. Test project creation: Validate that users can create a new project, provide necessary details, and view it in the project list.
+
+6. Test task assignment: Ensure that a user can assign tasks to other team members and update task statuses.
+
+7. Test file upload: Validate that users can upload, preview, and download relevant project files (such as images, documents, and spreadsheets).
+
+8. Test notifications: Ensure that users receive real-time notifications for tasks assigned to them and upcoming deadlines.
+
+9. Test user profile editing: Verify that users can edit their personal information, such as name, email address, and avatar, in their profile settings.
+
+10. Test project collaboration: Validate that multiple users can work on the same project, post comments, and communicate effectively through the platform's messaging feature.

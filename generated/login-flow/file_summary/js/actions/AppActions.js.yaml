@@ -1,0 +1,56 @@
+name: AppActions.js
+location: js/actions/
+description: This file contains the actions that change the application state and the functions related to user authentication.
+dependencies:
+  - redux
+  - bcryptjs
+  - constants from ../constants/
+  - auth from ../utils/
+  - browserHistory from react-router 
+functions:
+  - login(username, password)
+    - description: Logs in a user with the given username and password.
+    - parameters:
+      - username: The username of the user to be logged in. (string)
+      - password: The password of the user to be logged in. (string)
+    - returns: A dispatch function that sends out actions.
+  - logout()
+    - description: Logs out the current user.
+    - returns: A dispatch function that sends out actions.
+  - register(username, password)
+    - description: Registers a new user with the given username and password.
+    - parameters:
+      - username: The username of the new user. (string)
+      - password: The password of the new user. (string)
+    - returns: A dispatch function that sends out actions.
+  - setAuthState(newState)
+    - description: Sets the authentication state of the application.
+    - parameters:
+      - newState: The new authentication state. (boolean)
+    - returns: An action object with type SET_AUTH and the new state.
+  - changeForm(newState)
+    - description: Sets the form state.
+    - parameters:
+      - newState.username: The new text of the username input field of the form. (string)
+      - newState.password: The new text of the password input field of the form. (string)
+    - returns: An action object with type CHANGE_FORM and the new state.
+  - sendingRequest(sending)
+    - description: Sets the requestSending state, which displays a loading indicator during requests.
+    - parameters:
+      - sending: The new requestSending state. (boolean)
+    - returns: An action object with type SENDING_REQUEST and the new state.
+  - setErrorMessage(message)
+    - description: Sets the errorMessage state, which displays the ErrorMessage component when it is not empty.
+    - parameters:
+      - message: The error message to be displayed. (string)
+    - returns: A dispatch function that sends out actions.
+  - forwardTo(location)
+    - description: Forwards the user to the specified location.
+    - parameters:
+      - location: The route the user should be forwarded to. (string)
+    - returns: Nothing, but changes the route in the browser's history.
+  - anyElementsEmpty(elements)
+    - description: Checks if any elements of a JSON object are empty.
+    - parameters:
+      - elements: The object that should be checked. (object)
+    - returns: True if there are empty elements, false if there aren't.

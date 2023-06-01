@@ -1,5 +1,0 @@
-filename: webpack.dev.config.js
-extension: .js
-module.exports: "./makewebpackconfig"
-prod: false
-description: This is a configuration file for the development environment of a webpack application, which sets the prod variable to false. The "./makewebpackconfig" module is required to create the configuration.

@@ -1,0 +1,11 @@
+- location: js/utils/salt.js
+  purpose: Generate 16 bytes salt for bcrypt using a seed
+  function:
+    - Name: module.exports
+      Parameters:
+        - seed (string)
+      Return: 
+        - salt (string)
+  important notes:
+    - Salt must be exactly 16 bytes long
+    - The function should always return the same salt for the same seed.

@@ -1,0 +1,11 @@
+File: js/utils/auth.js
+Type: JavaScript file
+Functions:
+  - login(username, password, callback): Logs a user in
+  - logout(callback): Logs the current user out
+  - loggedIn(): Checks if anybody is logged in
+  - register(username, password, callback): Registers a user in the system
+Variables:
+  - auth: Object containing the login, logout, loggedIn, register, and onChange functions
+Imported modules:
+  - fakeRequest module

@@ -1,0 +1,8 @@
+- File: "serviceworker.js"
+  Purpose: "To manage offline caching for specific files in a React project"
+  Functions:
+    - "self.addEventListener('install')" : "Installs the caching service"
+    - "self.addEventListener('fetch')" : "Fetches the files to be cached and returns them if available in the cache, otherwise downloads them from the network and caches them for future use"
+  Variables:
+    - "CACHE_NAME": "The name of the cache being used"
+    - "urlsToCache": "The files to be cached"

@@ -1,0 +1,12 @@
+file_path: 'js/components/ErrorMessage.react.js'
+file_type: 'JavaScript React Component'
+file_functionality:
+  - Defines an ErrorMessage component
+  - Renders an error message if errorMessage prop is truthy
+  - Uses connect function from react-redux library to connect component to Redux store
+  - Exports the ErrorMessage component as default
+file_dependencies:
+  - react
+  - react-redux
+file_exports:
+  - ErrorMessage (default export)

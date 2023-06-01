@@ -1,0 +1,14 @@
+---
+File: js/components/App.react.js
+Description: 
+  This file contains the component 'App' that serves as a skeleton for all pages in the React application. It is responsible for rendering the navigation bar and children components. It also includes some Redux implementation.
+Imported Libraries:
+  - React
+  - Nav.react
+  - connect from 'react-redux'
+  - auth from '../utils/auth'
+Exported:
+  - The 'App' component as the default export after connecting it to Redux store using 'connect(select)(App)'.
+Redux Implementation:
+  - The 'select' function extracts the 'state' and returns it as 'data' property of the component. 
+  - The 'App' component is then wrapped by 'connect(select)(App)' to inject the 'dispatch' and 'data' properties into it.
