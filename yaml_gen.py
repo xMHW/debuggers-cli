@@ -1,4 +1,6 @@
-import os, argparse, random
+import os
+import argparse
+import random
 
 from langchain import LLMChain
 from langchain.document_loaders import GitLoader, DirectoryLoader, TextLoader
@@ -17,47 +19,64 @@ OPENAI_MODELS = {
     "GPT-4": "gpt-4"
 }
 
-def create_suggested_yaml(repo_url):
-    repo_name = repo_url.split('/')[-1].split('.')[0]
-    repo_path = f"./example_repo/{repo_name}"
-    supported_extensions = (".js", ".ts", ".tsx")
 
-    if os.path.exists(repo_path):
-        loader = GitLoader(repo_path=repo_path, branch="master", 
-                        file_filter=lambda file_path: file_path.endswith(supported_extensions))
+def generate_test_codes(repo_url):
+    repo_name = repo_url.split('/')[-1].split('.')[0]
+    file_summary_path = f"./generated/{repo_name}/file_summary"
+    test_scenario_file_path = f"./generated/{repo_name}/test-scenario.txt"
+
+    if not os.path.exists(test_scenario_file_path):
+        raise Exception(
+            'test_scenario_file_path not exists. Please run test-scenario-gen to generate test-scenario.txt.')
+
+    if os.path.exists(file_summary_path):
         loader = DirectoryLoader(file_summary_path, loader_cls=TextLoader)
     else:
-        loader = GitLoader(clone_url=repo_url, 
-                        repo_path=repo_path, branch="master",
-                        file_filter=lambda file_path: file_path.endswith(supported_extensions))
+        raise Exception(
+            'file_summary does not exist. Please run summary-gen to generate file_summary.')
 
-    prompt_template = """You are a Software Engineer who writes test codes. 
-    Your language/framework preference is Javascript(Node.js, Jest).
-    Use the following pieces of context to do actions at the end.
-    {context}
+    with open(test_scenario_file_path, "r") as f:
+        test_scenarios = f.read()
 
-    Action: {question}
-    """
+        for i in range(10):
+            prompt_template = """You are a Software Engineer who writes test codes. 
+            Your language/framework preference is Javascript(Node.js, Jest).
+            Use the following pieces of context to do actions at the end.
+            {context}
 
-    query = """
-    Create E2E test code in Javscript language which works in Node.js environment.
-    
-    """
+            Action: {question}
+            """
 
-    PROMPT = PromptTemplate(
-        template=prompt_template, input_variables=["context", "question"]
-    )
+            query = f"""
+            Create E2E test code for {i + 1}th business logic of below test scenario document.
+            E2E test code should be in Javscript language which works in Node.js environment.
+            At the beggining of the code, test scenario must be embedded in comment section.
 
-    index = VectorstoreIndexCreator().from_loaders([loader])
+            [test-scenario.txt]
+            {test_scenarios}
 
-    retriever = index.vectorstore.as_retriever()
+            Professional & Detail E2E test code in Javascript:
+            """
 
-    chain_type_kwargs = {"prompt": PROMPT}
-    qa = RetrievalQA.from_chain_type(llm=OpenAI(), chain_type="stuff", retriever=retriever,
-                                    chain_type_kwargs=chain_type_kwargs)
+            PROMPT = PromptTemplate(
+                template=prompt_template, input_variables=[
+                    "context", "question"]
+            )
 
-    with open(f"./yaml/{repo_name}-{hex(random.getrandbits(16))}.yaml", "w") as f:
-        f.write(qa.run(query))
+            index = VectorstoreIndexCreator().from_loaders([loader])
+
+            retriever = index.vectorstore.as_retriever()
+
+            chain_type_kwargs = {"prompt": PROMPT}
+            qa = RetrievalQA.from_chain_type(llm=OpenAI(model_name=OPENAI_MODELS["GPT-4"]), chain_type="stuff", retriever=retriever,
+                                             chain_type_kwargs=chain_type_kwargs)
+
+            test_code_file_path = f"./generated/{repo_name}/test-codes/test-code-{i+1}.js"
+            os.makedirs(os.path.dirname(test_code_file_path), exist_ok=True)
+            with open(test_code_file_path, "w") as f:
+                f.write(qa.run(query)
+                        .replace("```javascript", "").replace("```", ""))
+
 
 def create_test_scenario(repo_url):
     repo_name = repo_url.split('/')[-1].split('.')[0]
@@ -66,7 +85,8 @@ def create_test_scenario(repo_url):
     if os.path.exists(file_summary_path):
         loader = DirectoryLoader(file_summary_path, loader_cls=TextLoader)
     else:
-        raise Exception('file_summary does not exist. Please run summary-gen to generate file_summary.')
+        raise Exception(
+            'file_summary does not exist. Please run summary-gen to generate file_summary.')
 
     prompt_template = """You are a Software Engineer who writes E2E test scenarios. 
     Use the following pieces of context to do actions at the end.
@@ -81,7 +101,7 @@ def create_test_scenario(repo_url):
 
     Ignore configuration files such as webpack, package.json, etc. Embed business-logic-related files only.
     
-    10 E2E test cases(from 30 generated E2E tests) in BULLET POINTS:
+    10 E2E detail test cases(from 30 generated E2E tests) in BULLET POINTS:
     """
 
     PROMPT = PromptTemplate(
@@ -94,12 +114,13 @@ def create_test_scenario(repo_url):
 
     chain_type_kwargs = {"prompt": PROMPT}
     qa = RetrievalQA.from_chain_type(llm=OpenAI(model_name=OPENAI_MODELS["GPT-4"]), chain_type="stuff", retriever=retriever,
-                                    chain_type_kwargs=chain_type_kwargs)
+                                     chain_type_kwargs=chain_type_kwargs)
 
     test_scenario_file_path = f"./generated/{repo_name}/test-scenario.txt"
     os.makedirs(os.path.dirname(test_scenario_file_path), exist_ok=True)
     with open(test_scenario_file_path, "w") as f:
         f.write(qa.run(query))
+
 
 def generate_file_summary_yaml(repo_url):
     repo_name = repo_url.split('/')[-1].split('.')[0]
@@ -107,12 +128,12 @@ def generate_file_summary_yaml(repo_url):
     supported_extensions = (".js", ".ts", ".tsx")
 
     if os.path.exists(repo_path):
-        loader = GitLoader(repo_path=repo_path, branch="master", 
-                        file_filter=lambda file_path: file_path.endswith(supported_extensions))
+        loader = GitLoader(repo_path=repo_path, branch="master",
+                           file_filter=lambda file_path: file_path.endswith(supported_extensions))
     else:
-        loader = GitLoader(clone_url=repo_url, 
-                        repo_path=repo_path, branch="master",
-                        file_filter=lambda file_path: file_path.endswith(supported_extensions))
+        loader = GitLoader(clone_url=repo_url,
+                           repo_path=repo_path, branch="master",
+                           file_filter=lambda file_path: file_path.endswith(supported_extensions))
 
     data = loader.load()
 
@@ -126,7 +147,8 @@ def generate_file_summary_yaml(repo_url):
 
     File Summary in yaml Format:
     """
-    template = PromptTemplate(template=query, input_variables=['file_path', 'page_content'])
+    template = PromptTemplate(template=query, input_variables=[
+                              'file_path', 'page_content'])
 
     openai = OpenAI(model_name="gpt-3.5-turbo")
     chain = LLMChain(prompt=template, llm=openai)
@@ -140,14 +162,17 @@ def generate_file_summary_yaml(repo_url):
 
         os.makedirs(os.path.dirname(gen_file_path), exist_ok=True)
         with open(gen_file_path, "w") as f:
-            f.write(chain.run({'file_path': file_path, 'page_content': page_content}))
+            f.write(
+                chain.run({'file_path': file_path, 'page_content': page_content}))
             f.close()
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--repo_url", "-r", type=str, required=True, help="Github Public Repository URL")
-    parser.add_argument("--generate_mode", "-m", type=str, required=True, help="Generate mode - summary-gen, test-scenario-gen, test-gen")
+    parser.add_argument("--repo_url", "-r", type=str,
+                        required=True, help="Github Public Repository URL")
+    parser.add_argument("--generate_mode", "-m", type=str, required=True,
+                        help="Generate mode - summary-gen, test-scenario-gen, test-gen")
 
     args = parser.parse_args()
 
@@ -156,6 +181,6 @@ if __name__ == "__main__":
     elif args.generate_mode == "test-scenario-gen":
         create_test_scenario(args.repo_url)
     elif args.generate_mode == "test-gen":
-        create_suggested_yaml(args.repo_url)
+        generate_test_codes(args.repo_url)
     else:
         print("generate_mode(-m) option should be one of summary-gen, test-scenario-gen, test-gen. Please try again.")
