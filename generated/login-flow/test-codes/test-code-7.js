@@ -1,4 +1,3 @@
-```
 /*
 Test Scenario 7: Task status updates
   1. Test updating a task status, and ensure the new status is reflected in the project progress chart.
@@ -24,7 +23,9 @@ describe("Task status updates", () => {
     });
 
     expect(postRequestResponse.status).toBe("SUCCESS");
-    expect(postRequestResponse.message).toBe("Task status updated successfully.");
+    expect(postRequestResponse.message).toBe(
+      "Task status updated successfully."
+    );
   });
 
   // Test 7.2: Updating a task status with invalid value
@@ -42,4 +43,3 @@ describe("Task status updates", () => {
     expect(postRequestResponse.message).toBe("Invalid task status.");
   });
 });
-```
