@@ -1,0 +1,8 @@
+- File Name: NotFound.react.js
+- Location: js/components/pages/
+- Type: JavaScript file
+- Purpose: Render an article with a "Page not found" message and a link to the Home page when a user navigates to a non-existent page.
+- Dependencies:
+  - React library
+  - { Link } component from the react-router library
+- Exported: Default export as NotFound component.

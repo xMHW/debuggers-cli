@@ -1,0 +1,14 @@
+- file_name: AppConstants.js
+  file_path: js/constants/
+  purpose:
+    - To define constants that determine changes in the central data store (reducer.js)
+  contents:
+    - CHANGE_FORM
+    - SET_AUTH
+    - SENDING_REQUEST
+    - SET_ERROR_MESSAGE
+  format: 
+    - Follow specific format for action constants
+    - Each constant should be exported
+    - Written in JavaScript language
+  author: Professional Software Engineer with scarce E2E testing knowledge

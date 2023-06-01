@@ -1,0 +1,11 @@
+- File Name: "Dashboard.react.js"
+- File Path: "js/components/pages"
+- Description: A React component that serves as the Dashboard page. It is only visible to logged in users and can be accessed through the "/dashboard" route.
+- Libraries/Modules Used:
+  - React
+  - react-redux
+- Functions:
+  - render(): Renders the content of the component which includes the Dashboard title, a welcome message and instructions on how to run the application locally.
+- Props:
+  - data: The global state of the application which is injected into the component using the connect() function from react-redux.
+- Exported Component: The Dashboard component is exported as default after being wrapped with the connect() function.

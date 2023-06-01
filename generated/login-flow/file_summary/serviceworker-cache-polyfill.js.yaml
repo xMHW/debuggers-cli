@@ -1,0 +1,14 @@
+file_name: serviceworker-cache-polyfill.js
+    author: Google Inc.
+    copyright_year: 2015
+    license: Apache License, Version 2.0
+    usage: Caching of web content for offline availability
+    dependencies: Cache API, Promise API, fetch API
+    functions: addAll(requests)
+    operation:
+        - If Cache.prototype.addAll function is not defined, it is added with the given operation
+        - The function takes an array of Request objects or USVStrings as input
+        - It simulates sequence binding of inputs
+        - Each input is fetched and cached
+        - If the input has an invalid scheme, a NetworkError is thrown
+        - The function returns Promise object

@@ -1,0 +1,25 @@
+- File Name: fakeServer.js
+- File Path: js/utils/fakeServer.js
+- Import Dependencies:
+  - bcrypt
+  - genSalt (from './salt')
+- Variables:
+  - salt: generated using bcrypt.genSaltSync(10)
+  - users: list of users
+  - localStorage: local storage object from global window object
+- Server Object:
+  - Description: Fake remote server that uses bcrypt and localStorage to persist data across page reloads.
+  - Properties:
+    - init(): populates the users var and sets localStorage in case of empty or non-encrypted value
+    - login(username, password, callback): pretends to log a user in
+      - Parameters: username (string) - The username of the user to log in, password (string) - The password of the user to register, callback (function) - Called after a user is logged in (optional)
+      - Returns: If authentication is successful, it calls the callback function with the token key and some random value. Otherwise, it calls the callback function with authenticated as false and error key with either password-wrong or user-doesnt-exist type. 
+    - register(username, password, callback): pretends to register a user
+      - Parameters: username (string) - The username of the user to register, password (string) - The password of the user to register, callback (function) - Called after a user is registered (optional)
+      - Returns: If registration is successful, it calls the callback function with registered key as true. Otherwise, it calls the callback function with registered as false and error key with username-exists type.
+    - logout(callback): pretends to log a user out
+      - Parameters: callback (function) - Called after the user was logged out (optional)
+      - Returns: Removes the token key from localStorage and calls the callback function (if provided)
+    - doesUserExist(username): checks if a username exists in the db
+      - Parameters: username (string) - The username that should be checked
+      - Returns: True if the username exists, false if it doesn't.

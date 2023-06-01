@@ -1,0 +1,22 @@
+- File Name: HomePage.react.js
+- File Type: JavaScript
+- Functionality: The first page that users see of the app
+- Route: /
+- Libraries/Modules Used: 
+    - React
+    - React Router
+    - Redux
+    - PostCSS
+    - ServiceWorker
+    - AppCache
+    - bcrypt
+- Features: 
+    - Uses react-hot-loader to reflect changes in CSS and JS instantly without refreshing the page
+    - Uses redux for efficient implementation of a flux-like, unidirectional data flow 
+    - Uses PostCSS for modular and powerful CSS capabilities
+    - Uses react-router for routing
+    - Uses ServiceWorker and AppCache for offline usage of the application
+- Authentication: 
+    - Authentication is done using fakeRequest.js and fakeServer.js 
+    - The users are stored in localStorage with the passwords encrypted using bcrypt
+    - To change to real authentication, import request.js and have a server running somewhere

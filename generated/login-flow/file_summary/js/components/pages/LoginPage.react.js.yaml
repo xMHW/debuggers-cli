@@ -1,0 +1,25 @@
+- Filename: "LoginPage.react.js"
+- Filepath: "js/components/pages/LoginPage.react.js"
+- File type: JavaScript file
+- Description: Handles user login functionality
+- Route: "/login"
+- Dependencies: 
+  - React library 
+  - Form.react component 
+  - connect function from react-redux library
+  - auth utility module 
+  - login action from AppActions module 
+  - LoadingIndicator.react component
+- Top-level component: LoginPage class
+- Props passed to LoginPage component: 
+  - data object containing formState and currentlySending variables from global state
+  - dispatch function to call Redux actions
+- Child components:
+  - Form component with props data, dispatch, location, history, onSubmit, btnText, and currentlySending
+  - LoadingIndicator component
+- Functionality: 
+  - Renders login form
+  - Sends login credentials to Redux store on form submission
+  - Displays loading indicator while form is sending credentials
+  - Displays "Login" on submit button when form is not sending
+- Author: Unknown, not specified in file

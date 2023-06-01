@@ -1,0 +1,15 @@
+- File name: reducers.js
+- File path: js/reducers
+- Purpose: The reducer takes care of the data and using actions, the application state can be changed.
+- Import statements:
+  - From '../constants/AppConstants' import CHANGE_FORM, SET_AUTH, SENDING_REQUEST, SET_ERROR_MESSAGE
+  - From '../utils/auth' import auth
+- Initial application state:
+  - formState: an object with two properties, username and password, both with empty string values.
+  - currentlySending: a boolean value of false.
+  - loggedIn: a function call to auth.loggedIn().
+  - errorMessage: an empty string.
+- Exported function:
+  - Name: homeReducer.
+  - Parameters: state and action.
+  - Uses a switch statement to handle different action types and returns the new application state using the assign method with state and action newState as arguments. If the action type is not recognized, it returns the current state.

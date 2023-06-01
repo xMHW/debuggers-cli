@@ -1,8 +1,0 @@
----
-file_name: webpack.prod.config.js
-extension: js
-module_exports: true
-purpose: Used for generating a webpack configuration file for production environment.
-knowledge_required: Require knowledge of webpack and configuration knowledge.
-use_case: It is used by developers to generate a webpack configuration file that is optimized for production usage.
-testing: End-to-end testing should be performed on the generated configuration files to ensure all required modules are included and optimized.

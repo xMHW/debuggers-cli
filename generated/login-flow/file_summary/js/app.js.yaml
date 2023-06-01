@@ -1,0 +1,30 @@
+file_info:
+      name: "app.js"
+      path: "js/"
+      description: "This is the entry file for the application, mostly just setup and boilerplate code"
+      imports:
+        - "../serviceworker.js"
+        - "../serviceworker-cache-polyfill.js"
+        - "../manifest.json"
+        - "../.htaccess"
+        - "../favicon.ico"
+        - "../favicon.png"
+      dependencies:
+        - "react"
+        - "redux"
+        - "redux-thunk"
+        - "react-dom"
+        - "react-redux"
+        - "react-router"
+        - "fontfaceobserver"
+      css_files:
+        - "../css/main.css"
+      routes:
+        - "/"
+        - "/login"
+        - "/register"
+        - "/dashboard"
+        - "*"
+      location:
+        path: "js/"
+        id: "app"

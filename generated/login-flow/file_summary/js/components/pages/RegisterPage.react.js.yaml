@@ -1,0 +1,11 @@
+---
+File: "js/components/pages/RegisterPage.react.js"
+Description: "This file contains the RegisterPage component which allows users to register and login through a form. It utilizes the Form and LoadingIndicator components and dispatches actions from AppActions. It is also connected to the global state through the select function."
+Dependencies:
+  - "React"
+  - "react-redux"
+  - "../Form.react"
+  - "../../actions/AppActions"
+  - "../LoadingIndicator.react"
+Exports:
+  - "RegisterPage"

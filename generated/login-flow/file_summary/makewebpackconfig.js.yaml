@@ -1,0 +1,35 @@
+- File Name: makewebpackconfig.js
+- Author: unknown
+- Dependencies: 
+  - path
+  - webpack
+  - html-webpack-plugin
+  - appcache-webpack-plugin
+  - postcss-import
+  - postcss-simple-vars
+  - postcss-focus
+  - autoprefixer
+  - postcss-reporter
+- Description: This file exports a function that creates a configuration object for the webpack build process. It takes in an options object that specifies whether the build is for production or development. The configuration includes entry points, output information, module loaders, and various plugins that optimize and customize the build process.
+- Entry Points:
+  - If production mode, start with js/app.js
+  - If development mode, start with js/app.js and include webpack-dev-server and hot loading modules
+- Output: Compiles into js/build.js in the build folder
+- Loaders:
+  - babel loader for all .js files except those in node_modules folder
+  - PostCSS loader for all .css files
+  - url-loader for .png, .gif, and .jpeg files with a limit of 10000 bytes
+- Plugins:
+  - UglifyJsPlugin for javascript optimization in production mode
+  - HtmlWebpackPlugin to minify html and move index.html to the build folder
+  - AppCachePlugin to exclude .htaccess file
+  - HotModuleReplacementPlugin for hot module replacement in development mode
+- PostCSS:
+  - Imports and adds dependencies for all css files
+  - Replaces variables
+  - Adds :focus to :hover selectors
+  - Adds vendor prefixes to supported browsers
+  - Provides warnings in the console
+- Target: "web" to make web variables accessible to webpack
+- Stats: False to not show stats in the console
+- Progress: True to show progress in the console

@@ -1,0 +1,17 @@
+File: js/components/Nav.react.js
+  Purpose: Renders the navigation bar
+  Dependencies:
+    - React
+    - react-router
+    - '../actions/AppActions'
+    - './LoadingButton.react'
+  Class: Nav
+    Properties:
+      - loggedIn: boolean (required)
+      - currentlySending: boolean (required)
+    Methods:
+      - render
+        - Returns: JSX element
+      - _logout
+        - Returns: void
+  Export: Nav component as default

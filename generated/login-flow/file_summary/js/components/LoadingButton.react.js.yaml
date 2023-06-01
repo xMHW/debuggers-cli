@@ -1,0 +1,12 @@
+- File: js/components/LoadingButton.react.js
+  Description: Wraps the loading indicator in a tag with the .btn--loading class
+  Language: React
+  Dependencies:
+    - React
+    - ./LoadingIndicator.react
+  Exported Component: LoadingButton
+  Props:
+    - className: sets additional class names for the button element
+  Usage:
+    - Import LoadingButton from 'js/components/LoadingButton.react.js'
+    - Use <LoadingButton className="your-class-name" /> in JSX code
