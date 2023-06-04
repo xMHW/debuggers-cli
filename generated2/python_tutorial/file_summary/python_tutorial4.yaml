@@ -1,0 +1,84 @@
+1. Section: ["Menu"]
+   Elements:
+    - [Log in : "Navigates to the log in page"]
+    - [Spaces : "Navigates to the Spaces page"]
+    - [Sign Up : "Navigates to the Sign Up page"]
+    - [Create Website : "Navigates to the Create Website page"]
+    - [Get Certified : "Navigates to the Get Certified page"]
+
+2. Section: ["References"]
+   Elements:
+    - [HTML : "Navigates to the HTML reference page"]
+    - [CSS : "Navigates to the CSS reference page"]
+    - [JavaScript : "Navigates to the JavaScript reference page"]
+    - [SQL : "Navigates to the SQL reference page"]
+    - [Python : "Navigates to the Python reference page"]
+
+3. Section: ["Exercises"]
+   Elements:
+    - [HTML Exercises : "Navigates to the HTML exercises page"]
+    - [CSS Exercises : "Navigates to the CSS exercises page"]
+    - [JavaScript Exercises : "Navigates to the JavaScript exercises page"]
+    - [Python Exercises : "Navigates to the Python exercises page"]
+    - [SQL Exercises : "Navigates to the SQL exercises page"]
+
+4. Section: ["Bootcamps"]
+   Elements:
+    - [Next Bootcamp : "Displays the date of the upcoming bootcamp"]
+    - [Learn More : "Navigates to the Learn More page"]
+
+5. Section: ["HTML"]
+   Elements:
+    - [Learn HTML : "Navigates to the Learn HTML page"]
+    - [HTML and CSS : "Navigates to the HTML and CSS page"]
+    - [Learn RWD : "Navigates to the Learn RWD page"]
+    - [Learn W3.CSS : "Navigates to the Learn W3.CSS page"]
+    - [Learn Colors : "Navigates to the Learn Colors page"]
+
+6. Section: ["JavaScript"]
+   Elements:
+    - [Learn JavaScript : "Navigates to the Learn JavaScript page"]
+    - [Learn jQuery : "Navigates to the Learn jQuery page"]
+    - [Learn React : "Navigates to the Learn React page"]
+    - [Learn Vue.js : "Navigates to the Learn Vue.js page"]
+    - [Learn AJAX : "Navigates to the Learn AJAX page"]
+
+7. Section: ["Programming"]
+   Elements:
+    - [Learn Python : "Navigates to the Learn Python page"]
+    - [Learn Java : "Navigates to the Learn Java page"]
+    - [Learn C : "Navigates to the Learn C page"]
+    - [Learn C++ : "Navigates to the Learn C++ page"]
+    - [Learn C# : "Navigates to the Learn C# page"]
+
+8. Section: ["Server Side"]
+   Elements:
+    - [Learn SQL : "Navigates to the Learn SQL page"]
+    - [Learn MySQL : "Navigates to the Learn MySQL page"]
+    - [Learn PHP : "Navigates to the Learn PHP page"]
+    - [Learn ASP : "Navigates to the Learn ASP page"]
+    - [Learn Node.js : "Navigates to the Learn Node.js page"]
+
+9. Section: ["Data Analytics"]
+   Elements:
+    - [Learn AI : "Navigates to the Learn AI page"]
+    - [Learn Generative AI : "Navigates to the Learn Generative AI page"]
+    - [Learn Machine Learning : "Navigates to the Learn Machine Learning page"]
+    - [Learn Data Science : "Navigates to the Learn Data Science page"]
+    - [Learn NumPy : "Navigates to the Learn NumPy page"]
+
+10. Section: ["XML Tutorials"]
+    Elements:
+    - [Learn XML : "Navigates to the Learn XML page"]
+    - [Learn XML AJAX : "Navigates to the Learn XML AJAX page"]
+    - [Learn XML DOM : "Navigates to the Learn XML DOM page"]
+    - [Learn XML DTD : "Navigates to the Learn XML DTD page"]
+    - [Learn XML Schema : "Navigates to the Learn XML Schema page"]
+
+11. Section: ["Size Limit Reached"]
+    Elements:
+    - [PYTHON : "Navigates to the Python page"]
+    - [JAVA : "Navigates to the Java page"]
+    - [PHP : "Navigates to the PHP page"]
+    - [BOOTSTRAP : "Navigates to the Bootstrap page"]
+    - [HOW TO : "Navigates to the How To page"]
