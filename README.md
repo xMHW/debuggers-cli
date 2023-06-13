@@ -81,9 +81,10 @@ Make sure to update the `GIT_REPOSITORY` value in the `.env` file with the desir
 
 ## Alternate Idea: HTML Summarizer
 
-html_yaml.py is an alternate idea that we introduced in midterm, but we did not actually use, so it remains as an alternate idea. The way it works is by summarizing html page and collecting all the interative objects. NOTE: It is made based on yaml_gen.py, and not part of the main implementation.
+html_yaml.py is an alternate idea that we introduced in midterm, but we did not actually use, so it remains as an alternate idea. The way it works is by summarizing html page and collecting all the interative objects. 
+NOTE: It is made based on yaml_gen.py, and not part of the main implementation.
 
-## Usage
+### Usage
 
 1. Name the website and provide link
 ```
