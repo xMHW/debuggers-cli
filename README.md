@@ -79,6 +79,43 @@ To test the CLI tool, you can use the following example repository:
 
 Make sure to update the `GIT_REPOSITORY` value in the `.env` file with the desired repository URL.
 
+## Alternate Idea: HTML Summarizer
+
+html_yaml.py is an alternate idea that we introduced in midterm, but we did not actually use, so it remains as an alternate idea. The way it works is by summarizing html page and collecting all the interative objects. NOTE: It is made based on yaml_gen.py, and not part of the main implementation.
+
+## Usage
+
+1. Name the website and provide link
+```
+WEB_NAME = "python_tutorial"
+WEB_LINK = "https://www.w3schools.com/python/python_file_write.asp"
+```
+
+2. Create summary of html page
+```
+python html_yaml.py -m summary-gen
+```
+
+3. Fetch all interactive elements.
+By using the previous summary:
+```
+python html_yaml.py -m fetch-sect
+```
+Without using the previous summary:
+```
+python html_yaml.py -m fetch-elems
+```
+
+4. Generate test scenario
+```
+python html_yaml.py -m test-scenario-gen
+```
+
+5. Generate test cases
+```
+python html_yaml.py -m test-gen
+```
+
 ## Important Notes
 
 - Make sure to run the commands in the specified order (`summary-gen` -> `test-scenario-gen` -> `test-gen`).
