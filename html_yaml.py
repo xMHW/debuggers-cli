@@ -30,16 +30,23 @@ OPENAI_MODELS = {
     "GPT-4": "gpt-4"
 }
 
+# MANUALLY CHANGE THIS
+WEB_NAME = "python_tutorial"
+WEB_LINK = "https://www.w3schools.com/python/python_file_write.asp"
+
 def generate_file_summary_yaml():
-    repo_name = "python_tutorial"
-    url = requests.get("https://www.w3schools.com/python/python_file_write.asp")
+    repo_name = WEB_NAME
+    url = requests.get(WEB_LINK)
     htmltext = url.text
 
-    f = open("temporaryfile.html", "w")
+    gen_html_path = f"./generated/{repo_name}/file_summary/{repo_name}.html"
+    os.makedirs(os.path.dirname(gen_html_path), exist_ok=True)
+
+    f = open(gen_html_path, "w")
     f.write(htmltext)
     f.close()
 
-    loader = UnstructuredHTMLLoader("temporaryfile.html")
+    loader = UnstructuredHTMLLoader(gen_html_path)
 
     data = loader.load()
 
@@ -63,10 +70,10 @@ def generate_file_summary_yaml():
     i = 0
     for file in data:
         page_content = file.page_content
-        file_path = repo_name + str(i)
+        file_path = repo_name + "_A_" + str(i)
         print(file_path)
 
-        gen_file_path = f"./generated2/{repo_name}/file_summary/{file_path}.yaml"
+        gen_file_path = f"./generated/{repo_name}/file_summary/{file_path}.yaml"
 
         os.makedirs(os.path.dirname(gen_file_path), exist_ok=True)
         with open(gen_file_path, "w") as f:
@@ -77,16 +84,19 @@ def generate_file_summary_yaml():
 
 
 def fetch_file_elements_yaml():
-    repo_name = "python_tutorial"
-    url = requests.get("https://www.w3schools.com/python/python_file_write.asp")
+    repo_name = WEB_NAME
+    url = requests.get(WEB_LINK)
     htmltext = url.text
 
-    f = open("temporaryfile.html", "w")
+    gen_html_path = f"./generated/{repo_name}/{repo_name}.html"
+    os.makedirs(os.path.dirname(gen_html_path), exist_ok=True)
+
+    f = open(gen_html_path, "w")
     f.write(htmltext)
     f.close()
 
-    loader = UnstructuredHTMLLoader("temporaryfile.html")
-    #loader = UnstructuredHTMLLoader("temporaryfile.html", mode="elements")
+    loader = UnstructuredHTMLLoader(gen_html_path)
+    #loader = UnstructuredHTMLLoader(gen_html_path, mode="elements")
 
     data = loader.load()
 
@@ -115,13 +125,13 @@ def fetch_file_elements_yaml():
     openai = OpenAI(model_name="gpt-3.5-turbo")
     chain = LLMChain(prompt=template, llm=openai)
 
-    i = 1
+    i = 0
     for file in data:
         page_content = file.page_content
-        file_path = repo_name + str(i)
+        file_path = repo_name + "_B_" + str(i)
         print(file_path)
 
-        gen_file_path = f"./generated2/{repo_name}/file_summary/{file_path}.yaml"
+        gen_file_path = f"./generated/{repo_name}/file_summary/{file_path}.yaml"
 
         os.makedirs(os.path.dirname(gen_file_path), exist_ok=True)
         with open(gen_file_path, "w") as f:
@@ -131,8 +141,8 @@ def fetch_file_elements_yaml():
         i += 1
 
 def fetch_file_sects_yaml():
-    repo_name = "python_tutorial"
-    url = requests.get("https://www.w3schools.com/python/python_file_write.asp")
+    repo_name = WEB_NAME
+    url = requests.get(WEB_LINK)
     htmltext = url.text
 
     f = open("temporaryfile.html", "w")
@@ -144,7 +154,7 @@ def fetch_file_sects_yaml():
 
     data = loader.load()
 
-    file_summary_path = f"./generated2/{repo_name}/file_summary/{repo_name}0.yaml"
+    file_summary_path = f"./generated/{repo_name}/file_summary/{repo_name}_A_0.yaml"
 
     with open(file_summary_path, "r") as f:
         context = f.read()
@@ -168,13 +178,13 @@ def fetch_file_sects_yaml():
     openai = OpenAI(model_name="gpt-3.5-turbo")
     chain = LLMChain(prompt=template, llm=openai)
 
-    i = 1
+    i = 0
     for file in data:
         page_content = file.page_content
-        file_path = repo_name + str(i)
+        file_path = repo_name + "_B_" + str(i)
         print(file_path)
 
-        gen_file_path = f"./generated2/{repo_name}/file_summary/{file_path}.yaml"
+        gen_file_path = f"./generated/{repo_name}/file_summary/{file_path}.yaml"
 
         os.makedirs(os.path.dirname(gen_file_path), exist_ok=True)
         with open(gen_file_path, "w") as f:
@@ -183,19 +193,126 @@ def fetch_file_sects_yaml():
             f.close()
         i += 1
 
+# This function is almost identical as the one in yaml_gen.py
+# However, the model used is "gpt-3.5-turbo"
+def create_test_scenario():
+    repo_name = WEB_NAME
+    file_summary_path = f"./generated/{repo_name}/file_summary"
+
+    if os.path.exists(file_summary_path):
+        loader = DirectoryLoader(file_summary_path, loader_cls=TextLoader)
+    else:
+        raise Exception(
+            'file_summary does not exist. Please run summary-gen to generate file_summary.')
+
+    prompt_template = """You are a Software Engineer who writes E2E test scenarios. 
+    Use the following pieces of context to do actions at the end.
+    {context}
+
+    Action: {question}
+    """
+
+    query = f"""
+    Create 30 E2E business logic test scenarios based on document,
+    and choose only {TEST_SCENARIO_COUNT} important test scenarios related to users in Project Manager's perspective.
+
+    Ignore configuration files such as webpack, package.json, etc. Embed business-logic-related files only.
+    
+    {TEST_SCENARIO_COUNT} E2E detail test cases(from 30 generated E2E tests) in BULLET POINTS:
+    """
+
+    PROMPT = PromptTemplate(
+        template=prompt_template, input_variables=["context", "question"]
+    )
+
+    index = VectorstoreIndexCreator().from_loaders([loader])
+
+    retriever = index.vectorstore.as_retriever()
+
+    chain_type_kwargs = {"prompt": PROMPT}
+    qa = RetrievalQA.from_chain_type(llm=OpenAI(model_name="gpt-3.5-turbo"), chain_type="stuff", retriever=retriever,
+                                     chain_type_kwargs=chain_type_kwargs)
+
+    test_scenario_file_path = f"./generated/{repo_name}/test-scenario.txt"
+    os.makedirs(os.path.dirname(test_scenario_file_path), exist_ok=True)
+    with open(test_scenario_file_path, "w") as f:
+        f.write(qa.run(query))
+
+# This function is almost identical as the one in yaml_gen.py
+# However, the model used is "gpt-3.5-turbo"
+def generate_test_codes():
+    repo_name = WEB_NAME
+    file_summary_path = f"./generated/{repo_name}/file_summary"
+    test_scenario_file_path = f"./generated/{repo_name}/test-scenario.txt"
+
+    if not os.path.exists(test_scenario_file_path):
+        raise Exception(
+            'test_scenario_file_path not exists. Please run test-scenario-gen to generate test-scenario.txt.')
+
+    if os.path.exists(file_summary_path):
+        loader = DirectoryLoader(file_summary_path, loader_cls=TextLoader)
+    else:
+        raise Exception(
+            'file_summary does not exist. Please run summary-gen to generate file_summary.')
+
+    with open(test_scenario_file_path, "r") as f:
+        test_scenarios = f.read()
+
+        for i in range(int(TEST_SCENARIO_COUNT)):
+            prompt_template = """You are a Software Engineer who writes test codes. 
+            Your language/framework preference is Javascript(Node.js, Jest).
+            Use the following pieces of context to do actions at the end.
+            {context}
+
+            Action: {question}
+            """
+
+            query = f"""
+            Create E2E test code for ONLY the {i + 1}th business logic of below test scenario document.
+            E2E test code should be in Javscript language which works in Node.js environment.
+            At the beggining of the code, test scenario must be embedded in comment section.
+
+            [test-scenario.txt]
+            {test_scenarios}
+
+            Professional & Detail E2E test code in Javascript:
+            """
+
+            PROMPT = PromptTemplate(
+                template=prompt_template, input_variables=[
+                    "context", "question"]
+            )
+
+            index = VectorstoreIndexCreator().from_loaders([loader])
+
+            retriever = index.vectorstore.as_retriever()
+
+            chain_type_kwargs = {"prompt": PROMPT}
+            qa = RetrievalQA.from_chain_type(llm=OpenAI(model_name="gpt-3.5-turbo"), chain_type="stuff", retriever=retriever,
+                                             chain_type_kwargs=chain_type_kwargs)
+
+            test_code_file_path = f"./generated/{repo_name}/test-codes/test-code-{i+1}.js"
+            os.makedirs(os.path.dirname(test_code_file_path), exist_ok=True)
+            with open(test_code_file_path, "w") as f:
+                f.write(qa.run(query)
+                        .replace("```javascript", "").replace("```", ""))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--generate_mode", "-m", type=str, required=True,
-                        help="Generate mode - summary-gen, fetch-elems.")
+                        help="Generate mode - summary-gen, fetch-elems, fetch-sect.")
 
     args = parser.parse_args()
 
     if args.generate_mode == "summary-gen":
         generate_file_summary_yaml()
-    if args.generate_mode == "fetch-elems":
+    elif args.generate_mode == "fetch-elems":
         fetch_file_elements_yaml()
-    if args.generate_mode == "fetch-sect":
+    elif args.generate_mode == "fetch-sect":
         fetch_file_sects_yaml()
+    elif args.generate_mode == "test-scenario-gen":
+        create_test_scenario()
+    elif args.generate_mode == "test-gen":
+        generate_test_codes()
     else:
-        print("generate_mode(-m) option should be one of summary-gen, fetch-elems. Please try again.")
+        print("generate_mode(-m) option should be one of summary-gen, fetch-elems, fetch-sect. Please try again.")
