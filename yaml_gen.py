@@ -1,6 +1,5 @@
 import os
 import argparse
-import random
 from dotenv import load_dotenv
 
 from langchain import LLMChain
@@ -9,10 +8,6 @@ from langchain.indexes import VectorstoreIndexCreator
 from langchain.chains import RetrievalQA
 from langchain.llms import OpenAI
 from langchain.prompts import PromptTemplate
-from langchain.chains.summarize import load_summarize_chain
-from langchain.docstore.document import Document
-from langchain.text_splitter import CharacterTextSplitter
-from functools import reduce
 
 load_dotenv()
 
@@ -135,14 +130,27 @@ def generate_file_summary_yaml():
     supported_extensions = (".js", ".ts", ".tsx")
 
     if os.path.exists(repo_path):
-        loader = GitLoader(repo_path=repo_path, branch="master",
-                           file_filter=lambda file_path: file_path.endswith(supported_extensions))
+        try:
+            loader = GitLoader(repo_path=repo_path, branch="master",
+                            file_filter=lambda file_path: file_path.endswith(supported_extensions))
+            data = loader.load()
+        except:
+            loader = GitLoader(repo_path=repo_path, branch="main",
+                            file_filter=lambda file_path: file_path.endswith(supported_extensions))
+            data = loader.load()
     else:
-        loader = GitLoader(clone_url=GIT_REPOSITORY,
-                           repo_path=repo_path, branch="master",
-                           file_filter=lambda file_path: file_path.endswith(supported_extensions))
+        try:
+            loader = GitLoader(clone_url=GIT_REPOSITORY,
+                            repo_path=repo_path, branch="master",
+                            file_filter=lambda file_path: file_path.endswith(supported_extensions))
+            data = loader.load()
+        except:
+            loader = GitLoader(clone_url=GIT_REPOSITORY,
+                            repo_path=repo_path, branch="main",
+                            file_filter=lambda file_path: file_path.endswith(supported_extensions))
+            data = loader.load()
 
-    data = loader.load()
+    print("Data Load Finished!")
 
     query = """
     You are a professional Software Engineer who has scarce knowledge about E2E testing and file summarization.
@@ -172,6 +180,7 @@ def generate_file_summary_yaml():
             f.write(
                 chain.run({'file_path': file_path, 'page_content': page_content}))
             f.close()
+    print("File Summary Generation Finished!")
 
 
 if __name__ == "__main__":
