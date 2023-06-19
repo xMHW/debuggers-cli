@@ -100,6 +100,7 @@ def create_test_scenario():
     query = f"""
     Create 30 E2E business logic test scenarios based on document,
     and choose only {TEST_SCENARIO_COUNT} important test scenarios related to users in Project Manager's perspective.
+    Each test scenario should have the following parts: Title, Description, and Expected Result.
 
     Ignore configuration files such as webpack, package.json, etc. Embed business-logic-related files only.
     
