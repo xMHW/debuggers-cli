@@ -14,6 +14,11 @@ load_dotenv()
 
 TEST_SCENARIO_COUNT = os.getenv("TEST_SCENARIO_COUNT")
 GIT_REPOSITORY = os.getenv("GIT_REPOSITORY")
+REPO_NAME = GIT_REPOSITORY.split('/')[-1].split('.')[0]
+GENERATED_DIR = f"./generated/{REPO_NAME}"
+TEST_CODES_DIR = f"{GENERATED_DIR}/test-codes"
+FILE_SUMMARY_DIR = f"{GENERATED_DIR}/file_summary"
+TEST_SCENARIO_FILE_PATH = f"{GENERATED_DIR}/test-scenario.txt"
 
 OPENAI_MODELS = {
     "DAVINCI": "text-davinci-003",
@@ -23,21 +28,17 @@ OPENAI_MODELS = {
 
 
 def generate_test_codes():
-    repo_name = GIT_REPOSITORY.split('/')[-1].split('.')[0]
-    file_summary_path = f"./generated/{repo_name}/file_summary"
-    test_scenario_file_path = f"./generated/{repo_name}/test-scenario.txt"
-
-    if not os.path.exists(test_scenario_file_path):
+    if not os.path.exists(TEST_SCENARIO_FILE_PATH):
         raise Exception(
             'test_scenario_file_path not exists. Please run test-scenario-gen to generate test-scenario.txt.')
 
-    if os.path.exists(file_summary_path):
-        loader = DirectoryLoader(file_summary_path, loader_cls=TextLoader)
+    if os.path.exists(FILE_SUMMARY_DIR):
+        loader = DirectoryLoader(FILE_SUMMARY_DIR, loader_cls=TextLoader)
     else:
         raise Exception(
             'file_summary does not exist. Please run summary-gen to generate file_summary.')
 
-    with open(test_scenario_file_path, "r") as f:
+    with open(TEST_SCENARIO_FILE_PATH, "r") as f:
         test_scenarios = f.read()
 
         for i in range(TEST_SCENARIO_COUNT):
@@ -73,7 +74,7 @@ def generate_test_codes():
             qa = RetrievalQA.from_chain_type(llm=OpenAI(model_name=OPENAI_MODELS["GPT-4"]), chain_type="stuff", retriever=retriever,
                                              chain_type_kwargs=chain_type_kwargs)
 
-            test_code_file_path = f"./generated/{repo_name}/test-codes/test-code-{i+1}.js"
+            test_code_file_path = f"{TEST_CODES_DIR}/test-code-{i+1}.js"
             os.makedirs(os.path.dirname(test_code_file_path), exist_ok=True)
             with open(test_code_file_path, "w") as f:
                 f.write(qa.run(query)
@@ -81,11 +82,8 @@ def generate_test_codes():
 
 
 def create_test_scenario():
-    repo_name = GIT_REPOSITORY.split('/')[-1].split('.')[0]
-    file_summary_path = f"./generated/{repo_name}/file_summary"
-
-    if os.path.exists(file_summary_path):
-        loader = DirectoryLoader(file_summary_path, loader_cls=TextLoader)
+    if os.path.exists(FILE_SUMMARY_DIR):
+        loader = DirectoryLoader(FILE_SUMMARY_DIR, loader_cls=TextLoader)
     else:
         raise Exception(
             'file_summary does not exist. Please run summary-gen to generate file_summary.')
@@ -100,6 +98,7 @@ def create_test_scenario():
     query = f"""
     Create 30 E2E business logic test scenarios based on document,
     and choose only {TEST_SCENARIO_COUNT} important test scenarios related to users in Project Manager's perspective.
+    Each test scenario should have the following parts: Title, Description, and Expected Result.
 
     Ignore configuration files such as webpack, package.json, etc. Embed business-logic-related files only.
     
@@ -118,15 +117,13 @@ def create_test_scenario():
     qa = RetrievalQA.from_chain_type(llm=OpenAI(model_name=OPENAI_MODELS["GPT-4"]), chain_type="stuff", retriever=retriever,
                                      chain_type_kwargs=chain_type_kwargs)
 
-    test_scenario_file_path = f"./generated/{repo_name}/test-scenario.txt"
-    os.makedirs(os.path.dirname(test_scenario_file_path), exist_ok=True)
-    with open(test_scenario_file_path, "w") as f:
+    os.makedirs(os.path.dirname(TEST_SCENARIO_FILE_PATH), exist_ok=True)
+    with open(TEST_SCENARIO_FILE_PATH, "w") as f:
         f.write(qa.run(query))
 
 
 def generate_file_summary_yaml():
-    repo_name = GIT_REPOSITORY.split('/')[-1].split('.')[0]
-    repo_path = f"./example_repo/{repo_name}"
+    repo_path = f"./example_repo/{REPO_NAME}"
     supported_extensions = (".js", ".ts", ".tsx")
 
     if os.path.exists(repo_path):
@@ -173,7 +170,7 @@ def generate_file_summary_yaml():
         file_path = file.metadata["file_path"]
         print(file_path)
 
-        gen_file_path = f"./generated/{repo_name}/file_summary/{file_path}.yaml"
+        gen_file_path = f"{FILE_SUMMARY_DIR}/{file_path}.yaml"
 
         os.makedirs(os.path.dirname(gen_file_path), exist_ok=True)
         with open(gen_file_path, "w") as f:
